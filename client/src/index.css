@@ -98,6 +98,11 @@
     gap: 60px;
 }
 
+.sign-up-card{
+    height: 600px;
+    width: 500px;
+}
+
 .login-title, .sign-up-title{
     text-align: center;
     font-size: 35px;
