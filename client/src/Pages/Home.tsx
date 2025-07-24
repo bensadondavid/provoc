@@ -105,6 +105,12 @@ function Home() {
 
           <div className="home-lists">
             <p className="home-lists-title">Your Lists</p>
+            {lists.map((list)=>(
+              <div className="home-lists-list" key={list.id}>
+                <p>{list.name}</p>
+                <p>{list.name}</p>
+              </div>
+            ))}
           </div>
         </div>
 

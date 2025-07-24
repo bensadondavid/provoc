@@ -186,6 +186,7 @@ nav ul li a{
     padding: 5px 15px;
     border: none;
     border-radius: 20px;
+    text-decoration: none;
 }
 
 .header-icons{
@@ -307,5 +308,19 @@ nav ul li a{
     border-radius: 20px;
     padding: 10px 15px;
     border: none;
+}
+
+/* Home Lists */
+
+.home-lists{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.home-lists-title{
+    font-size: x-large;
+    padding: 10px;
 }
 
