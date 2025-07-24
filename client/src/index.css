@@ -161,7 +161,7 @@ header{
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 0;
+    padding: 15px 0;
 }
 
 .header-title{
@@ -183,7 +183,7 @@ nav ul{
 
 nav ul li a{
     background-color: #e409ef;
-    padding: 5px 10px;
+    padding: 5px 15px;
     border: none;
     border-radius: 20px;
 }
@@ -270,5 +270,42 @@ nav ul li a{
     padding: 10px;
     border: none;
     border-radius: 30px;
+}
+
+/* New Game */
+
+.new-game{
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.new-game-title{
+    font-size: x-large;
+}
+
+.new-game-params{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.new-game-params select{
+    width: 90%;
+    background-color: #2b2b2b;
+    border-radius: 20px;
+    padding: 5px;
+}
+
+.new-game-button{
+    background-color: #e409ef;
+    border-radius: 20px;
+    padding: 10px 15px;
+    border: none;
 }
 
