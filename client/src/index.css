@@ -252,7 +252,7 @@ nav ul li a{
 }
 
 .home-scnd-container{
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1.5fr 1fr;
 }
 
 .home-first-container .new-game, .home-stats, .previous-sessions{
@@ -279,12 +279,14 @@ nav ul li a{
     width: 90%;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
 }
 
 .new-game-title{
     font-size: x-large;
+    padding: 10px 0;
+    font-weight: bold;
 }
 
 .new-game-params{
@@ -301,6 +303,7 @@ nav ul li a{
     background-color: #2b2b2b;
     border-radius: 20px;
     padding: 5px;
+    text-transform: capitalize;
 }
 
 .new-game-button{
@@ -308,6 +311,8 @@ nav ul li a{
     border-radius: 20px;
     padding: 10px 15px;
     border: none;
+    cursor: pointer;
+    margin-bottom: 10px;
 }
 
 /* Home Lists */
@@ -322,7 +327,8 @@ nav ul li a{
 
 .home-lists-title{
     font-size: x-large;
-    padding: 10px;
+    padding: 10px 0;
+    font-weight: bold;
 }
 
 .home-lists-list, .home-lists-list-titles{
@@ -332,6 +338,7 @@ nav ul li a{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
     text-transform: capitalize;
 }
 
@@ -364,4 +371,33 @@ nav ul li a{
 .home-lists-buttons svg{
     height: 20px;
     width: 20px;
+}
+
+
+/* Home stats */
+
+.home-stats{
+    display: flex;
+    flex-direction: column;
+}
+
+.home-stats-title{
+    width: 95%;
+    margin: 0 auto;
+    padding: 10px 0;
+    height: fit-content;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.home-stats-title p{
+    font-size: x-large;
+    font-weight: bold;
+}
+
+.home-stats-title svg{
+    height: 30px;
+    width: 30px;
 }
