@@ -10,4 +10,8 @@ const pool = new Pool({
     max : 15
 })
 
+pool.on('error', (err) => {
+  console.error('💥  Erreur sur le pool PostgreSQL :', err.code);
+});
+
 module.exports = pool
