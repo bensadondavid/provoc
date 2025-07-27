@@ -37,6 +37,8 @@ function Login() {
           setErrorMessage(data.message)
           return
         }
+        const token = data.token
+        localStorage.setItem('token', token)
         navigate('/home')
     }
     catch(error){

@@ -189,6 +189,11 @@ nav ul li a{
     text-decoration: none;
 }
 
+nav ul li:hover{
+    filter: brightness(1.5);
+    transition: filter 0.3s ease-in-out;
+}
+
 .header-icons{
     height: fit-content;
     width: fit-content;
@@ -321,7 +326,6 @@ nav ul li a{
     height: fit-content;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     align-items: center;
 }
 
@@ -340,6 +344,10 @@ nav ul li a{
     justify-content: space-between;
     align-items: center;
     text-transform: capitalize;
+}
+
+.home-lists-list-titles{
+    margin: 10px 0 0 0;
 }
 
 .home-lists-list-titles p{

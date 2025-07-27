@@ -20,22 +20,14 @@ const logIn = async(req, res)=>{
         if(!verifyPassword){
             return res.status(400).json({message : 'Invalid credentials'})
         }
-        const accessToken = jwt.sign({'userId' : String(user.id)}, secret, {expiresIn : '1h'})
-        res.cookie('access-token', accessToken,{
-            httpOnly : true, 
-            sameSite : 'lax',
-            secure : false,
-            maxAge : 30 * 24 * 60 * 60 * 1000,
-            path : '/'
-        }
-        )
+        const accessToken = jwt.sign({'userId' : String(user.id), 'username' : String(user.username), 'userEmail' : user.email}, secret, {expiresIn : '24h'})
         const safeUser = {
             id: user.id,
             username: user.username,
             email: user.email,
         }
         console.log('connected')
-        res.status(200).json({message : 'Authentication successful', user : safeUser})
+        res.status(200).json({message : 'Authentication successful', user : safeUser, 'token' : accessToken})
     }
     catch(error){
         console.log(error);

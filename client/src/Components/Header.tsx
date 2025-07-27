@@ -1,9 +1,21 @@
-import { Link } from "react-router-dom"
-import UserIcon from "../assets/icons/userIcon"
+import { Link, useNavigate } from "react-router-dom"
+import UserIcon from "../assets/icons/UserIcon"
 import SettingsIcon from "../assets/icons/SettingsIcon"
 import LogOut from "../assets/icons/LogOut"
 
 function Header() {
+
+  const navigate = useNavigate()
+
+  const logOut = async()=>{
+    try{
+      localStorage.removeItem('token')
+      navigate('/login')
+    }
+    catch(error){
+      console.log(error);
+    }
+  }
 
   return (
     <header>
@@ -17,9 +29,9 @@ function Header() {
           </ul>
         </nav>
         <div className="header-icons">
-          <Link to={'/login'}><UserIcon /></Link>
+          <Link to={'/my-account'}><UserIcon /></Link>
           <Link to={'/settings'}><SettingsIcon /></Link>
-          <button><LogOut /></button>
+          <button onClick={logOut}><LogOut /></button>
         </div>
     </header>
   )

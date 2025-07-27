@@ -1,8 +1,10 @@
 const express = require('express')
 const app = express()
 const cors = require('cors')
-const userRoute = require('../routes/userRoute')
 const dotenv = require('dotenv').config()
+const userRoute = require('../routes/userRoute')
+const listsRoutes = require('../routes/listsRoutes');
+
 
 app.use(cors({
     origin : 'http://localhost:5173',
@@ -14,6 +16,8 @@ app.use(express.json())
 
 
 app.use('/users', userRoute)
+app.use('/lists', listsRoutes)
+
 
 
 module.exports = app

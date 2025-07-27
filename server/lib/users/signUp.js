@@ -22,7 +22,7 @@ const signUp = async(req, res)=>{
         // Hash password
         const hashedPassword = await bcrypt.hash(password, 10)
         // Creating a new user
-        const result = await pool.query(
+         await pool.query(
             `INSERT INTO users (username, email, hashed_password)
             VALUES($1, $2, $3) 
             RETURNING *`,
