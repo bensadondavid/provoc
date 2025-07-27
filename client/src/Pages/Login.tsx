@@ -2,17 +2,17 @@ import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 
 interface formData{
-  username : string, 
+  usernameOrEmail : string, 
   password : string
 }
 
 function Login() {
 
   const navigate = useNavigate()
-  const urlBack = import.meta.env.URL_BACK
+  const urlBack = import.meta.env.VITE_URL_BACK || 'http://localhost:3000/users/login'
 
   const [formData, setFormData] = useState<formData>({
-    username : '',
+    usernameOrEmail : '',
     password : ''
   })
 
@@ -29,6 +29,7 @@ function Login() {
         const response = await fetch(urlBack, {
           method : 'POST',
           headers : {'Content-Type' : 'application/json'},
+          credentials : 'include',
           body : JSON.stringify(formData)
         })
         const data = await response.json()
@@ -49,7 +50,7 @@ function Login() {
         <div className="login-card">
           <p className="login-title">Log In</p>
           <form onSubmit={handleSubmit}>
-            <input type="text" name="username" value={formData.username} onChange={handleChange} placeholder="Username" />
+            <input type="text" name="usernameOrEmail" value={formData.usernameOrEmail} onChange={handleChange} placeholder="Username or E-mail" />
             <input type="password" name="password" value={formData.password} onChange={handleChange} placeholder="Password" />
             <button type="submit">Log In</button>
           </form>

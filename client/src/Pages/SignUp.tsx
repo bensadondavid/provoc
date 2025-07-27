@@ -10,7 +10,7 @@ interface formData{
 function SignUp() {
 
   const navigate = useNavigate()
-  const urlBack = import.meta.env.URL_BACK
+  const urlBack = import.meta.env.VITE_URL_BACK  || 'http://localhost:3000/users/sign-up'
 
   const [formData, setFormData] = useState<formData>({
       username : '',

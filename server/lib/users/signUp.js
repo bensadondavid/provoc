@@ -1,7 +1,7 @@
 const pool = require('../db')
 const bcrypt = require('bcryptjs')
 
-const addUser = async(req, res)=>{
+const signUp = async(req, res)=>{
 
     const { username, email, password } = req.body
 
@@ -32,8 +32,8 @@ const addUser = async(req, res)=>{
     }
     catch(error){
         console.log(error);
-        res.status(500).json({message : error})
+        res.status(500).json({message : 'Internal error'})
     }
 }
 
-module.exports = addUser
+module.exports = signUp
