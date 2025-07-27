@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react"
 import Header from "../Components/Header"
-import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
-import { addList, clearList } from "../Store/listSlice"
 import InfosIcon from "../assets/icons/InfosIcon"
 import PlayIcons from "../assets/icons/PlayIcons"
 import StatsIcon from "../assets/icons/StatsIcon"
@@ -16,14 +14,12 @@ interface List {
 }
 
 function Home() {
-  const stateUser = useSelector(state =>state.user)
-  const stateList = useSelector(state => state.list)
-  const dispatch = useDispatch();
+
   const navigate = useNavigate();
 
   const urlBack = import.meta.env.VITE_URL_BACK || 'http://localhost:3000';
   const [lists, setLists] = useState<List[]>([]);
-  const [selectedListId, setSelectedListId] = useState('');
+  const [selectedListName, setSelectedListName] = useState('');
   const [gameFirstLanguage, setGameFirstLanguage] = useState('');
   const [gameSecondLanguage, setGameSecondLanguage] = useState('');
 
@@ -50,10 +46,10 @@ function Home() {
     getList();
   }, []);
 
-  const selectedList = lists.find((list) => list.id === selectedListId);
+  const selectedList = lists.find((list) => list.name === selectedListName);
 
   const launchGame = () => {
-    if (!selectedListId || !gameFirstLanguage || !gameSecondLanguage) {
+    if (!selectedListName || !gameFirstLanguage || !gameSecondLanguage) {
       alert("Please select both a list and a language");
       return;
     }
@@ -61,18 +57,21 @@ function Home() {
       alert("First and second languages must be different");
       return;
     }
-    if(stateList.length > 0){
-      dispatch(clearList())
-    }
 
-    dispatch(addList({
-      id : selectedListId,
-      firstLanguage: gameFirstLanguage,
-      secondLanguage: gameFirstLanguage,
-    }));
+    const params = new URLSearchParams({
+      id: selectedListName,
+      first: gameFirstLanguage,
+      second: gameSecondLanguage,
+    });
 
-    navigate('/new-game');
+    navigate(`/new-game?${params.toString()}`);
   };
+
+  const setList = (listSelected : List)=>{
+    const name = listSelected.name
+    const url = `/new-game/${name}`
+    navigate(url)
+  }
 
   return (
     <>
@@ -83,14 +82,14 @@ function Home() {
             <p className="new-game-title">New Game</p>
 
             <div className="new-game-params">
-              <select value={selectedListId} onChange={(e) => {
-                setSelectedListId(e.target.value)
+              <select value={selectedListName} onChange={(e) => {
+                setSelectedListName(e.target.value)
                 setGameFirstLanguage('')
                 setGameSecondLanguage('')
               }}>
                 <option value="">Select a list</option>
                 {lists.map((list) => (
-                  <option key={list.id} value={list.id}>{list.name}</option>
+                  <option key={list.id} value={list.name}>{list.name}</option>
                 ))}
               </select>
 
@@ -128,7 +127,7 @@ function Home() {
                 <p>{list.wordsNumber}</p>
               <div className="home-lists-buttons">
               <button><InfosIcon /></button>
-              <button><PlayIcons /></button>
+              <button onClick={()=>setList(list)}><PlayIcons /></button>
               </div>
               </div>
             ))}
