@@ -23,7 +23,7 @@ function Home() {
   const [gameFirstLanguage, setGameFirstLanguage] = useState('');
   const [gameSecondLanguage, setGameSecondLanguage] = useState('');
 
-  const getList = async () => {
+  const getLists = async () => {
     try {
       const token = localStorage.getItem('token')
       const response = await fetch(`${urlBack}/lists/home-lists`, {
@@ -41,8 +41,12 @@ function Home() {
     }
   };
 
+  const setList = (url : string)=>{
+    navigate(`${url}`)
+  }
+
   useEffect(() => {
-    getList();
+    getLists();
   }, []);
 
   const selectedList = lists.find((list) => list.name === selectedListName);
@@ -58,19 +62,12 @@ function Home() {
     }
 
     const params = new URLSearchParams({
-      id: selectedListName,
-      first: gameFirstLanguage,
-      second: gameSecondLanguage,
-    });
-
-    navigate(`/new-game?${params.toString()}`);
+      name : selectedList.id,
+      gameFirstLanguage,
+      gameSecondLanguage
+    })
+    setList(`/new-game?${params.toString()}`)
   };
-
-  const setList = (listSelected : List)=>{
-    const name = listSelected.name
-    const url = `/new-game/${name}`
-    navigate(url)
-  }
 
   return (
     <>
@@ -125,8 +122,11 @@ function Home() {
                 <p>{list.firstLanguage} / {list.secondLanguage}</p>
                 <p>{list.wordsNumber}</p>
               <div className="home-lists-buttons">
-              <button><InfosIcon /></button>
-              <button onClick={()=>setList(list)}><PlayIcons /></button>
+              <button onClick={()=>setList(`/list/${list.id}`)}><InfosIcon /></button>
+              <button onClick={()=>{
+                const params = new URLSearchParams({name : list.id})
+                setList(`/new-game?${params.toString()}`,)}}>
+                <PlayIcons /></button>
               </div>
               </div>
             ))}

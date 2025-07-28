@@ -2,7 +2,7 @@ import Header from "../Components/Header"
 import { useEffect, useState } from "react";
 import InfosIcon from "../assets/icons/InfosIcon"
 import PlayIcons from "../assets/icons/PlayIcons"
-import AddIcon from "../assets/icons/addIcon";
+import AddIcon from "../assets/icons/AddIcon";
 import { Link, useNavigate } from "react-router-dom";
 
 interface List {
@@ -20,7 +20,7 @@ function Lists() {
     const urlBack = import.meta.env.VITE_URL_BACK || 'http://localhost:3000';
     const [lists, setLists] = useState<List[]>([]);
 
-    const getList = async () => {
+    const getLists = async () => {
         try {
           const token = localStorage.getItem('token')
           const response = await fetch(`${urlBack}/lists/all-lists`, {
@@ -39,14 +39,12 @@ function Lists() {
       };
     
       useEffect(() => {
-        getList();
+        getLists();
       }, []);
     
-       const setList = (listSelected : List)=>{
-            const name = listSelected.name
-            const url = `/new-game/${name}`
-            navigate(url)
-        }
+       const setList = (url : string)=>{
+          navigate(`${url}`)
+  }
 
   return (
     <>
@@ -71,11 +69,15 @@ function Lists() {
                       <p>{list.wordsNumber}</p>
                       <p>{new Date(list.createdAt).toLocaleDateString()}</p>
                   <div className="lists-buttons">
-                  <button><InfosIcon /></button>
-                  <button onClick={()=>setList(list)}><PlayIcons /></button>
-                  </div>
-                  </div>
-                  ))}
+                  <button onClick={()=>setList(`/list/${list.id}`)}><InfosIcon /></button>
+                  <button onClick={()=>{
+                    const params = new URLSearchParams({name : list.id})
+                    setList(`/new-game?${params.toString()}`,)}}>
+                    <PlayIcons />
+                  </button>
+                      </div>
+                      </div>
+                      ))}
                 </div>
         </div>
     </>

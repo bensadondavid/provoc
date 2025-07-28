@@ -1,8 +1,9 @@
+import { useParams } from "react-router-dom"
 
 
 function List() {
 
-    const params = new URLSearchParams()
+    const {id} = useParams()
 
   return (
     <div className="selected-list">
