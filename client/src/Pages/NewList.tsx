@@ -30,7 +30,7 @@ function NewList() {
   const handleSubmit = async (e : React.FormEvent<HTMLFormElement>)=>{
     e.preventDefault()
     try{
-      const response = await fetch(`${urlBack}/new-list`, {
+      const response = await fetch(`${urlBack}/lists/new-list`, {
         method : 'POST',
         headers : {
           'Authorization' : `Bearer ${token}`,

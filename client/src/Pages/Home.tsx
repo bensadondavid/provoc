@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom"
 import InfosIcon from "../assets/icons/InfosIcon"
 import PlayIcons from "../assets/icons/PlayIcons"
 import StatsIcon from "../assets/icons/StatsIcon"
+import CalendarIcon from "../assets/icons/CalendarIcon"
 
 interface List {
   id: string;
@@ -135,7 +136,12 @@ function Home() {
 
         <div className="home-scnd-container">
 
-          <div className="previous-sessions"></div>
+          <div className="previous-sessions">
+            <div className="previous-session-title">
+              <p>Your last sessions</p>
+              <CalendarIcon />
+            </div>
+          </div>
 
           <div className="home-stats">
             <div className="home-stats-title">

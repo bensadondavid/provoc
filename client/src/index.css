@@ -239,6 +239,7 @@ nav ul li:hover{
     display: grid;
     grid-template-rows: repeat(2, 1fr);
     align-items: center;
+    padding: 10px 0;
 }
 
 .home-first-container, .home-scnd-container{
@@ -349,6 +350,10 @@ nav ul li:hover{
     margin: 10px 0 30px 0;
 }
 
+.home-lists-list{
+    padding-bottom: 20px;
+}
+
 .home-lists-list-titles p{
     font-size: large;
     font-weight: bold;
@@ -369,8 +374,8 @@ nav ul li:hover{
 }
 
 .home-lists-buttons button{
-    height: 30px;
-    width: 30px;
+    height: 25px;
+    width: 25px;
     border: none;
     border-radius: 50%;
     background-color: #e409ef;
@@ -381,8 +386,31 @@ nav ul li:hover{
 }
 
 .home-lists-buttons svg{
-    height: 20px;
-    width: 20px;
+    height: 18px;
+    width: 18px;
+}
+
+/* previous sessions */
+
+.previous-session-title{
+    width: 95%;
+    margin: 0 auto;
+    padding: 10px 0;
+    height: fit-content;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.previous-session-title p{
+    font-size: x-large;
+    font-weight: bold;
+}
+
+.previous-session-title svg{
+    height: 30px;
+    width: 30px;
 }
 
 
@@ -528,7 +556,8 @@ nav ul li:hover{
 .new-list-title{
     width: 95%;
     margin: auto;
-    padding: 30px 0;
+    margin-bottom: 50px;
+    text-align: center;
 }
 
 .new-list form{
