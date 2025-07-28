@@ -9,6 +9,8 @@ const PrivateRoute = lazy(()=> import('./Components/PrivateRoute'))
 const Lists = lazy(()=>import('./Pages/Lists'))
 const NewList = lazy(()=>import('./Pages/NewList'))
 const List = lazy(()=>import('./Pages/List'))
+const Stats = lazy(()=>import('./Pages/Stats'))
+const MyAccount = lazy(()=>import('./Pages/MyAccount'))
 
 function App() {
 
@@ -27,6 +29,8 @@ function App() {
             <Route path="/lists" element={<Lists />} />
             <Route path="/list/:id" element={<List />} />
             <Route path="/new-list" element={<NewList />} />
+            <Route path="/stats" element={<Stats />} />
+            <Route path="/my-account" element={<MyAccount />} />
           </Route>  
         </Routes>
       </Suspense>
