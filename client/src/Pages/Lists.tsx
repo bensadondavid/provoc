@@ -2,14 +2,16 @@ import Header from "../Components/Header"
 import { useEffect, useState } from "react";
 import InfosIcon from "../assets/icons/InfosIcon"
 import PlayIcons from "../assets/icons/PlayIcons"
-import { useNavigate } from "react-router-dom";
+import AddIcon from "../assets/icons/addIcon";
+import { Link, useNavigate } from "react-router-dom";
 
 interface List {
   id: string;
   name: string;
   firstLanguage: string;
   secondLanguage: string;
-  wordsNumber : number
+  wordsNumber : number,
+  createdAt : string
 }
 
 function Lists() {
@@ -29,7 +31,6 @@ function Lists() {
             }
           });
           const data = await response.json();
-          console.log(data.lists)
           if (!response.ok) throw new Error(data.message);
           setLists(data.lists);
         } catch (error) {
@@ -51,28 +52,31 @@ function Lists() {
     <>
         <Header />
         <div className="lists">
-            <h1 className="lists-title">Your Lists</h1>
+          <div className="lists-title">
+            <h1>Your Lists</h1>
+            <Link to={'/new-list'}><AddIcon /></Link>
+          </div>
             <div className="lists-container">
-                <div className="lists">
-                <div className="lists-list-titles">
-                <p>Name</p>
-                <p>Languages</p>
-                <p style={{transform : 'translateX(22px)'}}>Length</p>
-                <p>Infos / Play</p>
+                  <div className="lists-list-titles">
+                  <p>Name</p>
+                  <p>Languages</p>
+                  <p>Length</p>
+                  <p>Created at</p>
+                  <p>Infos / Play</p>
+                  </div>
+                  {lists.map((list)=>(
+                  <div className="lists-list" key={list.id}>
+                      <p>{list.name}</p>
+                      <p>{list.firstLanguage} / {list.secondLanguage}</p>
+                      <p>{list.wordsNumber}</p>
+                      <p>{new Date(list.createdAt).toLocaleDateString()}</p>
+                  <div className="lists-buttons">
+                  <button><InfosIcon /></button>
+                  <button onClick={()=>setList(list)}><PlayIcons /></button>
+                  </div>
+                  </div>
+                  ))}
                 </div>
-                {lists.map((list)=>(
-                <div className="home-lists-list" key={list.id}>
-                    <p>{list.name}</p>
-                    <p>{list.firstLanguage} / {list.secondLanguage}</p>
-                    <p>{list.wordsNumber}</p>
-                <div className="home-lists-buttons">
-                <button><InfosIcon /></button>
-                <button onClick={()=>setList(list)}><PlayIcons /></button>
-                </div>
-                </div>
-                ))}
-                </div>
-            </div>
         </div>
     </>
   )

@@ -7,6 +7,8 @@ const SignUp = lazy(()=> import('./Pages/SignUp'))
 const Home = lazy(()=> import('./Pages/Home'))
 const PrivateRoute = lazy(()=> import('./Components/PrivateRoute'))
 const Lists = lazy(()=>import('./Pages/Lists'))
+const NewList = lazy(()=>import('./Pages/NewList'))
+const List = lazy(()=>import('./Pages/List'))
 
 function App() {
 
@@ -23,6 +25,8 @@ function App() {
           <Route element={<PrivateRoute />}>
             <Route path="/home" element={<Home />} />
             <Route path="/lists" element={<Lists />} />
+            <Route path="/list/:id" element={<List />} />
+            <Route path="/new-list" element={<NewList />} />
           </Route>  
         </Routes>
       </Suspense>

@@ -20,7 +20,7 @@ function PrivateRoute() {
     }
   };
   checkAuth();
-}, [urlBack]);
+}, [urlBack, dispatch]);
   if (isAuthenticated === null) {
     return <p>Loading...</p>;
   }

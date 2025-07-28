@@ -4,7 +4,7 @@ const getAllLists = async(req, res)=>{
     try {
         const userId = req.user.userId
         const result = await pool.query(
-            `SELECT * FROM lists WHERE user_id = $1`,
+            `SELECT * FROM lists WHERE user_id = $1 LIMIT 10`,
             [userId]
         )
         if(result.rowCount === 0){

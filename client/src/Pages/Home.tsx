@@ -26,7 +26,7 @@ function Home() {
   const getList = async () => {
     try {
       const token = localStorage.getItem('token')
-      const response = await fetch(`${urlBack}/lists/all-lists`, {
+      const response = await fetch(`${urlBack}/lists/home-lists`, {
         method: 'GET',
         headers : {
           'Authorization' : `Bearer ${token}`,
@@ -34,7 +34,6 @@ function Home() {
         }
       });
       const data = await response.json();
-      console.log(data.lists)
       if (!response.ok) throw new Error(data.message);
       setLists(data.lists);
     } catch (error) {
@@ -117,7 +116,7 @@ function Home() {
             <div className="home-lists-list-titles">
               <p>Name</p>
               <p>Languages</p>
-              <p style={{transform : 'translateX(22px)'}}>Length</p>
+              <p>Length</p>
               <p>Infos / Play</p>
             </div>
             {lists.map((list)=>(
