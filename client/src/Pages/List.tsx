@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import Header from "../Components/Header"
+import EraseIcon from "../assets/icons/EraseIcon"
+import EditIcon from "../assets/icons/EditIcon"
 
 interface Words{
   id : string,
@@ -22,6 +24,9 @@ function List() {
 
     const urlBack = import.meta.env.VITE_URL_BACK || 'http://localhost:3000'
     const {name} = useParams()
+
+    const [edit, setEdit] = useState<boolean>(false)
+    const handleEdit = ()=>{}
 
     const [words, setWords] = useState<Words[]>([])
     const [list, setList] = useState<List>()
@@ -56,14 +61,20 @@ function List() {
             <p>{list?.firstLanguage}</p>
             <p>{list?.secondLanguage}</p>
             <p>Created at</p>
+            <p>Edit/Erase</p>
           </div>
           {words?.map((word)=>(
             <div className="word" key={word.id}>
               <p>{word.firstLanguage}</p>
               <p>{word.secondLanguage}</p>
               <p>{new Date(word.createdAt).toLocaleDateString()}</p>
+              <div className="word-icons">
+                <button><EditIcon /></button>
+                <button><EraseIcon /></button>
+              </div>
             </div>
           ))}
+          <button className="add-word">Add Word</button>
         </div>
       </div>
     </>

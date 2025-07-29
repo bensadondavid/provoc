@@ -609,8 +609,11 @@ nav ul li:hover{
 .selected-list-title{
     width: 95%;
     margin: auto;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
     text-align: center;
+    font-size: xx-large;
+    text-transform: capitalize;
+    font-weight: bold;
 }
 
 .selected-list-container{
@@ -620,4 +623,62 @@ nav ul li:hover{
     border: none;
     border-radius: 30px;
     background-color: #2b2b2b;
+}
+
+.selected-list-container-title, .word{
+    width: 100%;
+    margin: auto;
+    height: fit-content;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    justify-content: space-between;
+    align-items: center;
+    text-transform: capitalize;
+    text-align: center;
+}
+
+.selected-list-container-title{
+    font-size: x-large;
+    padding: 40px 0;
+    font-weight: bold;
+}
+
+.word-icons{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.word-icons button{
+    height: 30px;
+    width: 30px;
+    border: none;
+    border-radius: 50%;
+    background-color: #e409ef;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.word-icons svg{
+    height: 20px;
+    width: 20px;
+}
+
+.add-word{
+    height: fit-content;
+    width: fit-content;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    background-color: #e409ef;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    margin: auto;
+    margin-top: 30px;
 }
