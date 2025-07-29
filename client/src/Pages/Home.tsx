@@ -123,9 +123,9 @@ function Home() {
                 <p>{list.firstLanguage} / {list.secondLanguage}</p>
                 <p>{list.wordsNumber}</p>
               <div className="home-lists-buttons">
-              <button onClick={()=>setList(`/list/${list.id}`)}><InfosIcon /></button>
+              <button onClick={()=>setList(`/list/${list.name}`)}><InfosIcon /></button>
               <button onClick={()=>{
-                const params = new URLSearchParams({name : list.id})
+                const params = new URLSearchParams({name : list.name})
                 setList(`/new-game?${params.toString()}`,)}}>
                 <PlayIcons /></button>
               </div>

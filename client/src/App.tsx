@@ -27,7 +27,7 @@ function App() {
           <Route element={<PrivateRoute />}>
             <Route path="/home" element={<Home />} />
             <Route path="/lists" element={<Lists />} />
-            <Route path="/list/:id" element={<List />} />
+            <Route path="/list/:name" element={<List />} />
             <Route path="/new-list" element={<NewList />} />
             <Route path="/stats" element={<Stats />} />
             <Route path="/my-account" element={<MyAccount />} />

@@ -69,9 +69,9 @@ function Lists() {
                       <p>{list.wordsNumber}</p>
                       <p>{new Date(list.createdAt).toLocaleDateString()}</p>
                   <div className="lists-buttons">
-                  <button onClick={()=>setList(`/list/${list.id}`)}><InfosIcon /></button>
+                  <button onClick={()=>setList(`/list/${list.name}`)}><InfosIcon /></button>
                   <button onClick={()=>{
-                    const params = new URLSearchParams({name : list.id})
+                    const params = new URLSearchParams({name : list.name})
                     setList(`/new-game?${params.toString()}`,)}}>
                     <PlayIcons />
                   </button>
