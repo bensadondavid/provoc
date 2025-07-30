@@ -9,7 +9,7 @@ const addList = async(req, res)=>{
             `SELECT * FROM lists WHERE name = $1`,
             [name]
         )
-        if(!existing.rows.length !== 0){
+        if(existing.rows.length !== 0){
             return res.status(400).json({message : 'A list with this name already exists'})
         }
         await pool.query(

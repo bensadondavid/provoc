@@ -3,10 +3,15 @@ import { useParams } from "react-router-dom"
 import Header from "../Components/Header"
 import EraseIcon from "../assets/icons/EraseIcon"
 import EditIcon from "../assets/icons/EditIcon"
+import AddIcon from "../assets/icons/AddIcon"
+
+interface Word{
+  firstLanguage : string,
+  secondLanguage : string,
+}
 
 interface Words{
   id : string,
-  name : string,
   firstLanguage : string,
   secondLanguage : string,
   createdAt : string
@@ -24,6 +29,7 @@ function List() {
 
     const urlBack = import.meta.env.VITE_URL_BACK || 'http://localhost:3000'
     const {name} = useParams()
+    const token = localStorage.getItem('token')
 
     const [edit, setEdit] = useState<boolean>(false)
     const handleEdit = ()=>{}
@@ -51,6 +57,42 @@ function List() {
       getList()
     },[])
 
+    const [formData, setFormData] = useState<Word>({
+      firstLanguage : '',
+      secondLanguage : ''
+    })
+    const [addNewWord, setAddNewWord] = useState<boolean>(false)
+    const [errorMessage, setErrorMessage] = useState<string>('')
+    const handleFormData = (e : React.ChangeEvent<HTMLInputElement>)=>{
+      const {name, value} = e.target
+      setFormData(
+        prev => ({
+          ...prev, [name] : value
+        })
+      )
+    }
+    const addWord = async(e : React.FormEvent<HTMLFormElement>)=>{
+      e.preventDefault()
+      try{
+        const response = await fetch(`urlBack/new-word`, {
+          method : 'POST',
+          headers : {
+            'Authorization' : `Bearer ${token}`,
+            'Content-Type' : 'application/json'
+          },
+          body : JSON.stringify(formData)
+        })
+        const data = await response.json()
+        if(!response.ok){
+          return setErrorMessage(data.message)
+        }
+        setWords((prev)=>[...prev, data.newWord])
+      }
+      catch(error){
+        console.log(error);
+      }
+    }
+
   return (
     <>
       <Header />
@@ -74,7 +116,24 @@ function List() {
               </div>
             </div>
           ))}
-          <button className="add-word">Add Word</button>
+          {addNewWord ?
+          <>
+          <form onSubmit={addWord} className="word-form">
+            <input type="text" name="firstLanguage" value={formData.firstLanguage} onChange={handleFormData} placeholder={list?.firstLanguage} />
+            <input type="text" name="secondLanguage" value={formData.secondLanguage} onChange={handleFormData} placeholder={list?.secondLanguage} />
+            <p>/</p>
+            <div className="word-form-icons">
+              <button type="submit"><AddIcon /></button>
+              <button onClick={()=>setAddNewWord(false)}><EraseIcon /></button>
+            </div>
+          </form>
+          </>
+          :
+          <></>}
+          {errorMessage &&
+          (<p style={{textAlign : 'center', color : '#e409ef', fontSize : 'large'}}>{errorMessage}</p>)
+          }
+          <button onClick={()=>setAddNewWord(true)} className="add-word">Add Word</button>
         </div>
       </div>
     </>

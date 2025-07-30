@@ -625,7 +625,7 @@ nav ul li:hover{
     background-color: #2b2b2b;
 }
 
-.selected-list-container-title, .word{
+.selected-list-container-title, .word, .word-form{
     width: 100%;
     margin: auto;
     height: fit-content;
@@ -643,7 +643,11 @@ nav ul li:hover{
     font-weight: bold;
 }
 
-.word-icons{
+.word-form{
+    margin-top: 20px;
+}
+
+.word-icons, .word-form-icons{
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -651,7 +655,7 @@ nav ul li:hover{
     gap: 10px;
 }
 
-.word-icons button{
+.word-icons button, .word-form-icons button{
     height: 30px;
     width: 30px;
     border: none;
@@ -663,7 +667,7 @@ nav ul li:hover{
     cursor: pointer;
 }
 
-.word-icons svg{
+.word-icons svg, .word-form-icons svg{
     height: 20px;
     width: 20px;
 }
@@ -682,3 +686,21 @@ nav ul li:hover{
     margin: auto;
     margin-top: 30px;
 }
+
+.word-form input{
+    width: fit-content;
+    height: fit-content;
+    padding: 5px;
+    margin: auto;
+    background-color: #2b2b2b;
+    border: 0.5px solid rgba(172, 172, 172, 0.5);;
+    border-radius: 20px;
+    box-shadow: 1px 2px 2px rgba(172, 172, 172, 0.5);
+}
+
+.word-form input::placeholder{
+    text-align: center;
+    text-transform: capitalize;
+}
+
+
