@@ -1,8 +1,14 @@
-
+import Header from "../Components/Header"
 
 function Stats() {
+
   return (
-    <div>Stats</div>
+    <>
+      <Header />
+      <div className="stats">
+
+      </div>
+    </>
   )
 }
 

@@ -4,6 +4,7 @@ const cors = require('cors')
 const dotenv = require('dotenv').config()
 const userRoute = require('../routes/userRoute')
 const listsRoutes = require('../routes/listsRoutes');
+const wordsRoute = require('../routes/worsdRoute')
 
 
 app.use(cors({
@@ -17,6 +18,7 @@ app.use(express.json())
 
 app.use('/users', userRoute)
 app.use('/lists', listsRoutes)
+app.use('/words', wordsRoute)
 
 
 

@@ -59,7 +59,7 @@ function List() {
 
     const [formData, setFormData] = useState<Word>({
       firstLanguage : '',
-      secondLanguage : ''
+      secondLanguage : '',
     })
     const [addNewWord, setAddNewWord] = useState<boolean>(false)
     const [errorMessage, setErrorMessage] = useState<string>('')
@@ -74,13 +74,13 @@ function List() {
     const addWord = async(e : React.FormEvent<HTMLFormElement>)=>{
       e.preventDefault()
       try{
-        const response = await fetch(`urlBack/new-word`, {
+        const response = await fetch(`${urlBack}/new-word`, {
           method : 'POST',
           headers : {
             'Authorization' : `Bearer ${token}`,
             'Content-Type' : 'application/json'
           },
-          body : JSON.stringify(formData)
+          body : JSON.stringify({...formData, listId : list.id})
         })
         const data = await response.json()
         if(!response.ok){
@@ -133,7 +133,7 @@ function List() {
           {errorMessage &&
           (<p style={{textAlign : 'center', color : '#e409ef', fontSize : 'large'}}>{errorMessage}</p>)
           }
-          <button onClick={()=>setAddNewWord(true)} className="add-word">Add Word</button>
+          <button onClick={()=>{setAddNewWord(true); setFormData({firstLanguage : '', secondLanguage : ''})}} className="add-word">Add Word</button>
         </div>
       </div>
     </>

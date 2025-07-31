@@ -1,8 +1,15 @@
+import Header from "../Components/Header"
 
-function MyAccount() {
+function myAccount() {
+
   return (
-    <div>MyAccount</div>
+    <>
+      <Header />
+      <div className="my-account">
+
+      </div>
+    </>
   )
 }
 
-export default MyAccount
+export default myAccount
