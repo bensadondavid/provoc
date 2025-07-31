@@ -20,7 +20,7 @@ function Home() {
 
   const urlBack = import.meta.env.VITE_URL_BACK || 'http://localhost:3000';
   const [lists, setLists] = useState<List[]>([]);
-  const [selectedListName, setSelectedListName] = useState('');
+  const [selectedListId, setSelectedListId] = useState('');
   const [gameFirstLanguage, setGameFirstLanguage] = useState('');
   const [gameSecondLanguage, setGameSecondLanguage] = useState('');
 
@@ -50,10 +50,10 @@ function Home() {
     getLists();
   }, []);
 
-  const selectedList = lists.find((list) => list.name === selectedListName);
+  const selectedList = lists.find((list) => list.id === selectedListId);
 
   const launchGame = () => {
-    if (!selectedListName || !gameFirstLanguage || !gameSecondLanguage) {
+    if (!selectedListId || !gameFirstLanguage || !gameSecondLanguage) {
       alert("Please select both a list and a language");
       return;
     }
@@ -79,14 +79,14 @@ function Home() {
             <p className="new-game-title">New Game</p>
 
             <div className="new-game-params">
-              <select value={selectedListName} onChange={(e) => {
-                setSelectedListName(e.target.value)
+              <select value={selectedListId} onChange={(e) => {
+                setSelectedListId(e.target.value)
                 setGameFirstLanguage('')
                 setGameSecondLanguage('')
               }}>
                 <option value="">Select a list</option>
                 {lists.map((list) => (
-                  <option key={list.id} value={list.name}>{list.name}</option>
+                  <option key={list.id} value={list.id}>{list.name}</option>
                 ))}
               </select>
 
@@ -123,9 +123,9 @@ function Home() {
                 <p>{list.firstLanguage} / {list.secondLanguage}</p>
                 <p>{list.wordsNumber}</p>
               <div className="home-lists-buttons">
-              <button onClick={()=>setList(`/list/${list.name}`)}><InfosIcon /></button>
+              <button onClick={()=>setList(`/list/${list.id}`)}><InfosIcon /></button>
               <button onClick={()=>{
-                const params = new URLSearchParams({name : list.name})
+                const params = new URLSearchParams({id : list.id})
                 setList(`/new-game?${params.toString()}`,)}}>
                 <PlayIcons /></button>
               </div>

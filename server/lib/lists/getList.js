@@ -3,16 +3,17 @@ const pool = require('../db')
 
 const getList = async(req, res)=>{
     try{
-        const {name} = req.params
+        const {id} = req.params
         const searchList = await pool.query(
-            `SELECT * FROM lists WHERE name = $1 `,
-            [name]
+            `SELECT * FROM lists WHERE id = $1 `,
+            [id]
         )
         if(searchList.rows.length === 0){
             return res.status(400).json({message : 'No list found'})
         }
         const list = searchList.rows[0]
         const newList = {
+            id : list.id,
             name : list.name,
             firstLanguage : list.first_language,
             secondLanguage : list.second_language

@@ -10,7 +10,7 @@ const getList = require('../lib/lists/getList')
 
 router.get('/all-lists',verifyToken, getAllLists)
 router.get('/home-lists', verifyToken, getTenLists)
-router.get('/list/:name', getList)
+router.get('/list/:id', getList)
 router.post('/new-list', verifyToken, addList)
 
 

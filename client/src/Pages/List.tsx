@@ -28,7 +28,7 @@ interface List {
 function List() {
 
     const urlBack = import.meta.env.VITE_URL_BACK || 'http://localhost:3000'
-    const {name} = useParams()
+    const {id} = useParams()
     const token = localStorage.getItem('token')
 
     const [edit, setEdit] = useState<boolean>(false)
@@ -38,7 +38,7 @@ function List() {
     const [list, setList] = useState<List>()
     const getList = async()=>{
       try{
-        const response = await fetch(`${urlBack}/lists/list/${name}`,{
+        const response = await fetch(`${urlBack}/lists/list/${id}`,{
           method : 'GET',
         })
         const data = await response.json()
@@ -73,20 +73,24 @@ function List() {
     }
     const addWord = async(e : React.FormEvent<HTMLFormElement>)=>{
       e.preventDefault()
+      console.log("✅ addWord triggered");
       try{
-        const response = await fetch(`${urlBack}/new-word`, {
+        const response = await fetch(`${urlBack}/words/new-word`, {
           method : 'POST',
           headers : {
             'Authorization' : `Bearer ${token}`,
             'Content-Type' : 'application/json'
           },
-          body : JSON.stringify({...formData, listId : list.id})
+          body : JSON.stringify({...formData, listId : id})
         })
         const data = await response.json()
         if(!response.ok){
           return setErrorMessage(data.message)
         }
         setWords((prev)=>[...prev, data.newWord])
+        setFormData({ firstLanguage: '', secondLanguage: '' });
+        setAddNewWord(false);
+        setErrorMessage('');
       }
       catch(error){
         console.log(error);
@@ -97,7 +101,7 @@ function List() {
     <>
       <Header />
       <div className="selected-list">
-        <p className="selected-list-title">{name}</p>
+        <p className="selected-list-title">{list?.name}</p>
         <div className="selected-list-container">
           <div className="selected-list-container-title">
             <p>{list?.firstLanguage}</p>
@@ -124,16 +128,18 @@ function List() {
             <p>/</p>
             <div className="word-form-icons">
               <button type="submit"><AddIcon /></button>
-              <button onClick={()=>setAddNewWord(false)}><EraseIcon /></button>
+              <button type="button" onClick={()=>setAddNewWord(false)}><EraseIcon /></button>
             </div>
           </form>
           </>
           :
           <></>}
           {errorMessage &&
-          (<p style={{textAlign : 'center', color : '#e409ef', fontSize : 'large'}}>{errorMessage}</p>)
+          (<p style={{textAlign : 'center', color : '#e409ef', fontSize : 'large', marginTop : '50px'}}>{errorMessage}</p>)
           }
+          {!addNewWord &&
           <button onClick={()=>{setAddNewWord(true); setFormData({firstLanguage : '', secondLanguage : ''})}} className="add-word">Add Word</button>
+          }
         </div>
       </div>
     </>

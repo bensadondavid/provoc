@@ -623,6 +623,7 @@ nav ul li:hover{
     border: none;
     border-radius: 30px;
     background-color: #2b2b2b;
+    overflow: scroll;
 }
 
 .selected-list-container-title, .word, .word-form{
@@ -635,6 +636,10 @@ nav ul li:hover{
     align-items: center;
     text-transform: capitalize;
     text-align: center;
+}
+
+.word{
+    margin-bottom: 20px;
 }
 
 .selected-list-container-title{
@@ -683,8 +688,7 @@ nav ul li:hover{
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    margin: auto;
-    margin-top: 30px;
+    margin: 30px auto;
 }
 
 .word-form input{
