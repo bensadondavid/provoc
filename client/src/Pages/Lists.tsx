@@ -4,6 +4,7 @@ import InfosIcon from "../assets/icons/InfosIcon"
 import PlayIcons from "../assets/icons/PlayIcons"
 import AddIcon from "../assets/icons/AddIcon";
 import { Link, useNavigate } from "react-router-dom";
+import EraseIcon from "../assets/icons/EraseIcon";
 
 interface List {
   id: string;
@@ -19,6 +20,7 @@ function Lists() {
     const navigate = useNavigate()
     const urlBack = import.meta.env.VITE_URL_BACK || 'http://localhost:3000';
     const [lists, setLists] = useState<List[]>([]);
+    const [errorMessage, setErrorMessage] = useState<string>('')
 
     const getLists = async () => {
         try {
@@ -46,6 +48,27 @@ function Lists() {
           navigate(`${url}`)
   }
 
+
+  const deleteList = async(listId : string)=>{
+      try{
+        const response = await fetch(`${urlBack}/lists/delete-list`, {
+          method : 'DELETE',
+          headers : {'Content-type' : 'application/json'},
+          body : JSON.stringify({id : listId})
+        })
+        const data = await response.json()
+        if(!response.ok){
+          console.log(data.message)
+          setErrorMessage(data.message)
+          return
+        }
+        setLists((prev) => prev.filter(list => list.id !== listId));
+        }
+        catch(error){
+          console.log(error);
+        }
+    }
+
   return (
     <>
         <Header />
@@ -69,15 +92,19 @@ function Lists() {
                       <p>{list.wordsNumber}</p>
                       <p>{new Date(list.createdAt).toLocaleDateString()}</p>
                   <div className="lists-buttons">
+                  <button onClick={()=>deleteList(list.id)}><EraseIcon /></button>
                   <button onClick={()=>setList(`/list/${list.id}`)}><InfosIcon /></button>
                   <button onClick={()=>{
                     const params = new URLSearchParams({id : list.id})
                     setList(`/new-game?${params.toString()}`,)}}>
                     <PlayIcons />
                   </button>
-                      </div>
-                      </div>
-                      ))}
+                  </div>
+                  </div>
+                  ))}
+                  {errorMessage &&
+                  (<p style={{textAlign : 'center', color : '#e409ef', fontSize : 'large', marginTop : '50px'}}>{errorMessage}</p>)
+                  }
                 </div>
         </div>
     </>

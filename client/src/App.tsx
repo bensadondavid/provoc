@@ -11,6 +11,7 @@ const NewList = lazy(()=>import('./Pages/NewList'))
 const List = lazy(()=>import('./Pages/List'))
 const Stats = lazy(()=>import('./Pages/Stats'))
 const MyAccount = lazy(()=>import('./Pages/MyAccount'))
+const NewGame = lazy(()=>import('./Pages/NewGame'))
 
 function App() {
 
@@ -31,6 +32,7 @@ function App() {
             <Route path="/new-list" element={<NewList />} />
             <Route path="/stats" element={<Stats />} />
             <Route path="/my-account" element={<MyAccount />} />
+            <Route path="/new-game" element={<NewGame />} />
           </Route>  
         </Routes>
       </Suspense>
