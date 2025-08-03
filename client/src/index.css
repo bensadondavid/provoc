@@ -626,7 +626,7 @@ nav ul li:hover{
     overflow: scroll;
 }
 
-.selected-list-container-title, .word, .word-form{
+.selected-list-container-title, .word, .word-form, .edit-word{
     width: 100%;
     margin: auto;
     height: fit-content;
@@ -691,18 +691,18 @@ nav ul li:hover{
     margin: 30px auto;
 }
 
-.word-form input{
+.word-form input, .edit-word input{
     width: fit-content;
     height: fit-content;
     padding: 5px;
-    margin: auto;
+    margin: 15px auto 30px auto;
     background-color: #2b2b2b;
     border: 0.5px solid rgba(172, 172, 172, 0.5);;
     border-radius: 20px;
     box-shadow: 1px 2px 2px rgba(172, 172, 172, 0.5);
 }
 
-.word-form input::placeholder{
+.word-form input::placeholder, .edit-word input::placeholder{
     text-align: center;
     text-transform: capitalize;
 }

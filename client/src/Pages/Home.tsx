@@ -63,7 +63,7 @@ function Home() {
     }
 
     const params = new URLSearchParams({
-      name : selectedList.id,
+      id : selectedList.id,
       gameFirstLanguage,
       gameSecondLanguage
     })

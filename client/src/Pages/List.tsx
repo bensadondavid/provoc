@@ -10,6 +10,12 @@ interface Word{
   secondLanguage : string,
 }
 
+interface EditWord{
+  id : string,
+  firstLanguage : string,
+  secondLanguage : string,
+}
+
 interface Words{
   id : string,
   firstLanguage : string,
@@ -30,9 +36,6 @@ function List() {
     const urlBack = import.meta.env.VITE_URL_BACK || 'http://localhost:3000'
     const {id} = useParams()
     const token = localStorage.getItem('token')
-
-    const [edit, setEdit] = useState<boolean>(false)
-    const handleEdit = ()=>{}
 
     const [words, setWords] = useState<Words[]>([])
     const [list, setList] = useState<List>()
@@ -97,6 +100,62 @@ function List() {
       }
     }
 
+    const deleteWord = async(wordId : string)=>{
+      try{
+        const response = await fetch(`${urlBack}/words/delete-word`, {
+          method : 'DELETE',
+          headers : {'Content-type' : 'application/json'},
+          body : JSON.stringify({id : wordId})
+        })
+        const data = await response.json()
+        if(!response.ok){
+          console.log(data.message)
+          setErrorMessage(data.message)
+          return
+        }
+        setWords((prev) => prev.filter(word => word.id !== wordId));
+        }
+        catch(error){
+          console.log(error);
+        }
+    }
+
+    const [edit, setEdit] = useState<string>('')
+    const [wordToEdit, setWordToEdit] = useState<EditWord>({
+      id : '',
+      firstLanguage : '',
+      secondLanguage : ''
+    })
+    const handleWordToEdit = (e : React.ChangeEvent<HTMLInputElement>)=>{
+      const {name, value} = e.target
+      setWordToEdit(prev=>({
+        ...prev, [name] : value
+      }))
+    }
+    const editWord = async(e : React.FormEvent<HTMLFormElement>, wordToEdit : EditWord)=>{
+      e.preventDefault()
+      try{
+        const response = await fetch(`${urlBack}/words/edit-word`, {
+          method : 'PUT',
+          headers : {'Content-type' : 'application/json'},
+          body : JSON.stringify(wordToEdit)
+        })
+        const data = await response.json()
+        if(!response.ok){
+          console.log(data.message);
+          setErrorMessage(data.message)
+          return
+        }
+        setWords((prev)=>(
+          prev.map((word)=> word.id === data.updatedWord.id ? data.updatedWord : word)
+        ))
+        setEdit('')
+      }
+      catch(error){
+        console.log(error)
+      }
+    }
+
   return (
     <>
       <Header />
@@ -110,14 +169,28 @@ function List() {
             <p>Edit/Erase</p>
           </div>
           {words?.map((word)=>(
-            <div className="word" key={word.id}>
-              <p>{word.firstLanguage}</p>
-              <p>{word.secondLanguage}</p>
-              <p>{new Date(word.createdAt).toLocaleDateString()}</p>
-              <div className="word-icons">
-                <button><EditIcon /></button>
-                <button><EraseIcon /></button>
+            <div key={word.id}>
+              {edit === word.id ?
+              <form className="edit-word"  onSubmit={(e)=>editWord(e, wordToEdit)}>
+                <input type="text" name='firstLanguage' value={wordToEdit.firstLanguage} onChange={handleWordToEdit} placeholder={word.firstLanguage} />
+                <input type="text" name='secondLanguage' value={wordToEdit.secondLanguage} onChange={handleWordToEdit} placeholder={word.secondLanguage} />
+                <p>{new Date(word.createdAt).toLocaleDateString()}</p>
+                <div className="word-icons">
+                  <button type="submit"><EditIcon /></button>
+                  <button onClick={()=>setEdit('')}><EraseIcon /></button>
+                </div>
+              </form>
+              :
+              <div className="word">
+                <p>{word.firstLanguage}</p>
+                <p>{word.secondLanguage}</p>
+                <p>{new Date(word.createdAt).toLocaleDateString()}</p>
+                <div className="word-icons">
+                  <button onClick={()=>{setEdit(word.id) ; setWordToEdit({id : word.id, firstLanguage : word.firstLanguage, secondLanguage : word.secondLanguage})}}><EditIcon /></button>
+                  <button onClick={()=>deleteWord(word.id)}><EraseIcon /></button>
+                </div>
               </div>
+              }
             </div>
           ))}
           {addNewWord ?
