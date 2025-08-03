@@ -95,7 +95,7 @@ function Lists() {
                   <button onClick={()=>deleteList(list.id)}><EraseIcon /></button>
                   <button onClick={()=>setList(`/list/${list.id}`)}><InfosIcon /></button>
                   <button onClick={()=>{
-                    const params = new URLSearchParams({id : list.id})
+                    const params = new URLSearchParams({id : list.id, name : list.name})
                     setList(`/new-game?${params.toString()}`,)}}>
                     <PlayIcons />
                   </button>
