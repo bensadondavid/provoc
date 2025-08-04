@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Header from "../Components/Header";
 import { useState, useEffect } from "react";
 
@@ -11,6 +11,8 @@ interface List {
 }
 
 function NewGame() {
+  
+  const navigate = useNavigate()
   const urlBack = import.meta.env.VITE_URL_BACK || "http://localhost:3000";
   const location = useLocation();
 
@@ -54,9 +56,26 @@ function NewGame() {
 
   const selectedList = lists.find((list) => list.id === selectedListId);
 
-  useEffect(()=>{
-    console.log(selectedList, firstLanguage, secondLanguage)
-  })
+  const launchGame = (e : React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const selectedList = lists.find((list) => list.id === selectedListId);
+    if (!selectedListId || !firstLanguage || !secondLanguage) {
+      alert("Please select both a list and a language");
+      return;
+    }
+    if (firstLanguage === secondLanguage) {
+      alert("First and second languages must be different");
+      return;
+    }
+
+    const params = new URLSearchParams({
+      id : selectedList?.id || '',
+      name : selectedList?.name || '',
+      firstLanguage,
+      secondLanguage
+    })
+    navigate(`/launch-game?${params.toString()}`)
+  };
 
   return (
     <>
@@ -64,7 +83,7 @@ function NewGame() {
       <div className="game">
         <h1 className="game-title">New Game</h1>
         <div className="game-container">
-          <form>
+          <form onSubmit={launchGame}>
             <select
               value={selectedListId}
               onChange={(e) => {
