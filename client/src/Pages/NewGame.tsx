@@ -54,6 +54,10 @@ function NewGame() {
 
   const selectedList = lists.find((list) => list.id === selectedListId);
 
+  useEffect(()=>{
+    console.log(selectedList, firstLanguage, secondLanguage)
+  })
+
   return (
     <>
       <Header />
@@ -85,33 +89,17 @@ function NewGame() {
                   onChange={(e) => setFirstLanguage(e.target.value)}
                 >
                   <option value="">Select a language</option>
-                  <option value={selectedList.firstLanguage}>
-                    {selectedList.firstLanguage}
-                  </option>
-                  <option
-                    value={selectedList.secondLanguage}
-                    disabled={selectedList.secondLanguage === selectedList.firstLanguage}
-                  >
-                    {selectedList.secondLanguage}
-                  </option>
+                  <option value={selectedList.firstLanguage}>{selectedList.firstLanguage}</option>
+                  <option value={selectedList.secondLanguage}> {selectedList.secondLanguage}</option>
                 </select>
 
                 <select
-                  name="secondLanguage"
-                  value={secondLanguage}
-                  onChange={(e) => setSecondLanguage(e.target.value)}
-                >
+                  name="secondLanguage" value={secondLanguage} onChange={(e) => setSecondLanguage(e.target.value)}>
                   <option value="">Select a language</option>
-                  <option
-                    value={selectedList.secondLanguage}
-                    disabled={selectedList.secondLanguage === firstLanguage}
-                  >
+                  <option value={selectedList.secondLanguage}>
                     {selectedList.secondLanguage}
                   </option>
-                  <option
-                    value={selectedList.firstLanguage}
-                    disabled={selectedList.firstLanguage === firstLanguage}
-                  >
+                  <option value={selectedList.firstLanguage}>
                     {selectedList.firstLanguage}
                   </option>
                 </select>
