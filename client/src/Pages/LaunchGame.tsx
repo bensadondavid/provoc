@@ -110,16 +110,21 @@ const chooseWord = ()=>{
 }
 
 useEffect(() => {
-  if (completedWords.length === words.length && words.length > 0) {
-    setGameStatus(true);
-  }
-}, [completedWords, words]);
-
-useEffect(() => {
   if (words.length > 0 && firstLang) {
     chooseWord();
   }
 }, [words, firstLang]);
+
+useEffect(() => {
+  if (!firstLang) return;
+
+  if (completedWords.length === words.length && words.length > 0) {
+    setGameStatus(true);
+    return;
+  }
+
+  chooseWord();
+}, [completedWords]);
 
 
 const handleSubmit = (e : React.FormEvent<HTMLFormElement>)=>{
@@ -129,7 +134,6 @@ const handleSubmit = (e : React.FormEvent<HTMLFormElement>)=>{
     setCompletedWords(prev=> [...prev, word])
     setScore(s => s + 1)
     setTotal(t => t + 1)
-    chooseWord()
     setErrorMessage('')
     wordRef.current.value = ''
     return

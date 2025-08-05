@@ -857,3 +857,12 @@ nav ul li:hover{
     gap: 10px;
     margin-bottom: 70px;
 }
+
+.completed-game{
+    margin: auto;
+    font-size: xx-large;
+    font-weight: bold;
+    color: #e409ef;
+    width: 50%;
+    text-align: center;
+}
