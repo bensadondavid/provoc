@@ -51,6 +51,7 @@ function LaunchGame() {
   const [score, setScore] = useState<number>(0)
   const [total, setTotal] = useState<number>(0)
   const [errorMessage, setErrorMessage] = useState<string>('')
+  const [gameStatus, setGameStatus] = useState(false)
 
   const getWords = async()=>{
     try{
@@ -98,18 +99,21 @@ function LaunchGame() {
 }, [list, firstLanguage, secondLanguage]);
 
 const chooseWord = ()=>{
-  if(!firstLang || completedWords.length === words.length){
+  if(!firstLang){
     return null
   }
-  let index = Math.floor(Math.random()*words.length)
-  let candidate : Word = words[index]
-  while(completedWords.some(w => w[firstLang] === candidate[firstLang])){
-    index = Math.floor(Math.random()*words.length)
-    candidate = words[index]
-  }
-  const newWord = words[index]
-  setWord(newWord)
+
+  const remainingWords = words?.filter((w)=> !completedWords.some(cw => cw[firstLang] === w[firstLang]))
+
+  const index = Math.floor(Math.random()*remainingWords.length)
+  setWord(remainingWords[index])
 }
+
+useEffect(() => {
+  if (completedWords.length === words.length && words.length > 0) {
+    setGameStatus(true);
+  }
+}, [completedWords, words]);
 
 useEffect(() => {
   if (words.length > 0 && firstLang) {
@@ -120,6 +124,7 @@ useEffect(() => {
 
 const handleSubmit = (e : React.FormEvent<HTMLFormElement>)=>{
   e.preventDefault()
+
   if(wordRef.current && wordRef.current.value.trim().toLowerCase() === word[secondLang].trim().toLowerCase()){
     setCompletedWords(prev=> [...prev, word])
     setScore(s => s + 1)
@@ -139,6 +144,8 @@ const handleSubmit = (e : React.FormEvent<HTMLFormElement>)=>{
     <Header />
     <div className="launch-game">
       <div className="launch-game-container">
+      {!gameStatus ?
+        <>
         <p className="word-to-translate">{firstLang && word && word[firstLang]}</p>
         <form onSubmit={handleSubmit}>
           <input type="text" name="wordSecondLanguage" ref={wordRef} />
@@ -151,6 +158,10 @@ const handleSubmit = (e : React.FormEvent<HTMLFormElement>)=>{
           (<p style={{textAlign : 'center', color : '#e409ef', fontSize : 'large', marginTop : '50px'}}>{errorMessage}</p>)
           }
         </div>
+        </>
+      :
+      <p className="completed-game">You have finish the list with a score of {score} / {total} </p>
+      }
       </div>
     </div>
     </>
