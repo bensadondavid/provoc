@@ -6,7 +6,7 @@ function myAccount() {
     <>
       <Header />
       <div className="my-account">
-
+      
       </div>
     </>
   )

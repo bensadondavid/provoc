@@ -16,13 +16,28 @@ interface List{
 
 function LaunchGame() {
 
+  const urlBack = import.meta.env.VITE_URL_BACK || 'http://localhost:3000'
+
+// Get the params
   const location = useLocation()
   const params = new URLSearchParams(location.search)
   const listId = params.get('id')
   const firstLanguage = params.get('firstLanguage')
   const secondLanguage = params.get('secondLanguage')
-  const urlBack = import.meta.env.VITE_URL_BACK || 'http://localhost:3000'
 
+  // Game variables
+  const [list, setList] = useState<List>()
+  const [word, setWord] = useState<Word | null>(null)
+  const [words, setWords] = useState<Word[]>([])
+  const [completedWords, setCompletedWords] = useState<Word[]>([])
+  const wordRef = useRef<HTMLInputElement>(null)
+  const [score, setScore] = useState<number>(0)
+  const [total, setTotal] = useState<number>(0)
+  const [errorMessage, setErrorMessage] = useState<string>('')
+  const [gameStatus, setGameStatus] = useState(false)
+  const [finalTime, setFinalTime] = useState<string | null>(null)
+
+// Timer
   const [startTime] = useState(Date.now());
   const [elapsed, setElapsed] = useState(0); 
 
@@ -43,17 +58,10 @@ function LaunchGame() {
     return `${minutes}:${seconds}`;
   };
 
-  const [list, setList] = useState<List>()
-  const [word, setWord] = useState<Word | null>(null)
-  const wordRef = useRef<HTMLInputElement>(null)
-  const [words, setWords] = useState<Word[]>([])
-  const [completedWords, setCompletedWords] = useState<Word[]>([])
-  const [score, setScore] = useState<number>(0)
-  const [total, setTotal] = useState<number>(0)
-  const [errorMessage, setErrorMessage] = useState<string>('')
-  const [gameStatus, setGameStatus] = useState(false)
+  // Get the words
 
-  const getWords = async()=>{
+  useEffect(()=>{
+    const getWords = async()=>{
     try{
       const response = await fetch(`${urlBack}/lists/list/${listId}`,{
         method : 'GET',
@@ -71,7 +79,11 @@ function LaunchGame() {
       console.log(error)
     }
   }
+    getWords()
+  },[urlBack, listId])
 
+
+// Choose the language
   const [firstLang, setFirstLang] = useState<"firstLanguage" | "secondLanguage" | null>(null)
   const [secondLang, setSecondLang] = useState<"firstLanguage" | "secondLanguage" | null>(null)
 
@@ -88,27 +100,24 @@ function LaunchGame() {
     }
   }
 
-  useEffect(()=>{
-    getWords()
-  },[])
-
   useEffect(() => {
   if (list && firstLanguage && secondLanguage) {
     chooseLanguage();
   }
 }, [list, firstLanguage, secondLanguage]);
 
+
+// Choose the word
 const chooseWord = ()=>{
   if(!firstLang){
     return null
   }
-
   const remainingWords = words?.filter((w)=> !completedWords.some(cw => cw[firstLang] === w[firstLang]))
-
   const index = Math.floor(Math.random()*remainingWords.length)
   setWord(remainingWords[index])
 }
 
+// Choose the first word
 useEffect(() => {
   if (words.length > 0 && firstLang) {
     chooseWord();
@@ -117,20 +126,19 @@ useEffect(() => {
 
 useEffect(() => {
   if (!firstLang) return;
-
   if (completedWords.length === words.length && words.length > 0) {
+    setFinalTime(formatTime(elapsed))
     setGameStatus(true);
     return;
   }
-
   chooseWord();
 }, [completedWords]);
 
 
+// Verify the answer
 const handleSubmit = (e : React.FormEvent<HTMLFormElement>)=>{
   e.preventDefault()
-
-  if(wordRef.current && wordRef.current.value.trim().toLowerCase() === word[secondLang].trim().toLowerCase()){
+  if(word && wordRef.current && secondLang && wordRef.current.value.trim().toLowerCase() === word[secondLang].trim().toLowerCase()){
     setCompletedWords(prev=> [...prev, word])
     setScore(s => s + 1)
     setTotal(t => t + 1)
@@ -140,8 +148,10 @@ const handleSubmit = (e : React.FormEvent<HTMLFormElement>)=>{
   }
   chooseWord()
   setTotal(t => t + 1)
-  wordRef.current.value = ''
+  if(wordRef.current) wordRef.current.value = ''
 }
+
+// Send the stats
 
   return (
     <>
