@@ -13,6 +13,7 @@ const Stats = lazy(()=>import('./Pages/Stats'))
 const MyAccount = lazy(()=>import('./Pages/MyAccount'))
 const NewGame = lazy(()=>import('./Pages/NewGame'))
 const LaunchGame = lazy(()=>import('./Pages/LaunchGame'))
+const ForgotPassword = lazy(()=>import('./Pages/ForgotPassword'))
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
           <Route path="/" element={<Entry />} />
           <Route path="/login" element={<Login />} />
           <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
 
           {/* Private routes */}
           <Route element={<PrivateRoute />}>
