@@ -1,5 +1,5 @@
 const pool = require('../db')
-const sendMail = require('./sendEmail')
+const sendMail = require('./sendMail')
 const crypto = require('crypto')
 
 

@@ -5,6 +5,7 @@ const dotenv = require('dotenv').config()
 const userRoute = require('../routes/userRoute')
 const listsRoutes = require('../routes/listsRoutes');
 const wordsRoute = require('../routes/worsdRoute')
+const statsRoute = require('../routes/statsRoutes')
 
 
 app.use(cors({
@@ -19,6 +20,7 @@ app.use(express.json())
 app.use('/users', userRoute)
 app.use('/lists', listsRoutes)
 app.use('/words', wordsRoute)
+app.use('/stats', statsRoute)
 
 
 

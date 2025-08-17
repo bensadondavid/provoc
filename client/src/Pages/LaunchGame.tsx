@@ -17,6 +17,7 @@ interface List{
 function LaunchGame() {
 
   const urlBack = import.meta.env.VITE_URL_BACK || 'http://localhost:3000'
+  const token = localStorage.getItem('token')
 
 // Get the params
   const location = useLocation()
@@ -124,16 +125,6 @@ useEffect(() => {
   }
 }, [words, firstLang]);
 
-useEffect(() => {
-  if (!firstLang) return;
-  if (completedWords.length === words.length && words.length > 0) {
-    setFinalTime(formatTime(elapsed))
-    setGameStatus(true);
-    return;
-  }
-  chooseWord();
-}, [completedWords]);
-
 
 // Verify the answer
 const handleSubmit = (e : React.FormEvent<HTMLFormElement>)=>{
@@ -152,6 +143,38 @@ const handleSubmit = (e : React.FormEvent<HTMLFormElement>)=>{
 }
 
 // Send the stats
+
+const sendStats = async()=>{
+  try{
+    const response = await fetch(`${urlBack}/stats/send-stats`, {
+      method : 'POST', 
+      headers : 
+      {'Content-Type' : 'application/json',
+        'Authorization' : `Bearer ${token}`
+      },
+      body : JSON.stringify({listId, score, total})
+    })
+    const data = await response.json()
+    if(response.ok){
+      console.log(data.message);
+      return setErrorMessage(data.message)
+    }
+  }
+  catch(error){
+    console.log(error)
+  }
+}
+
+useEffect(() => {
+  if (!firstLang) return;
+  if (completedWords.length === words.length && words.length > 0) {
+    setFinalTime(formatTime(elapsed))
+    setGameStatus(true);
+    sendStats()
+    return;
+  }
+  chooseWord();
+}, [completedWords])
 
   return (
     <>
@@ -174,7 +197,7 @@ const handleSubmit = (e : React.FormEvent<HTMLFormElement>)=>{
         </div>
         </>
       :
-      <p className="completed-game">You have finish the list with a score of {score} / {total} </p>
+      <p className="completed-game">You have finished the game with a score of {score} / {total} </p>
       }
       </div>
     </div>
