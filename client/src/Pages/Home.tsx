@@ -14,15 +14,26 @@ interface List {
   wordsNumber : number
 }
 
+interface LastSession{
+  id : string,
+  name : string, 
+  score : number, 
+  total : number, 
+  accuracy : number,
+  completedAt : string
+}
+
 function Home() {
 
   const navigate = useNavigate();
 
+  const token = localStorage.getItem('token')
   const urlBack = import.meta.env.VITE_URL_BACK || 'http://localhost:3000';
   const [lists, setLists] = useState<List[]>([]);
   const [selectedListId, setSelectedListId] = useState('');
   const [gameFirstLanguage, setGameFirstLanguage] = useState('');
   const [gameSecondLanguage, setGameSecondLanguage] = useState('');
+  const [lastSessions, setLastSessions] = useState<LastSession[]>([])
 
   const getLists = async () => {
     try {
@@ -70,6 +81,30 @@ function Home() {
     })
     setList(`/new-game?${params.toString()}`)
   };
+
+  const getLastSession = async()=>{
+    try{
+      const response = await fetch(`${urlBack}/stats/get-lasts-sessions`,{
+        method : 'GET', 
+        headers : {
+          'Content-Type' : 'application/json',
+          'Authorization' : `Bearer ${token}`
+        }
+      })
+      const data = await response.json()
+      if(!response.ok){
+        return console.log(data.message)
+      }
+      setLastSessions(data.newLastSessions)
+    }
+    catch(error){
+      console.log(error);
+    }
+  }
+
+  useEffect(()=>{
+    getLastSession()
+  },[])
 
   return (
     <>
@@ -141,6 +176,22 @@ function Home() {
             <div className="previous-session-title">
               <p>Your last sessions</p>
               <CalendarIcon />
+            </div>
+            <div className="home-last-sessions-title">
+              <p>List</p>
+              <p>Score</p>
+              <p>Accuracy</p>
+              <p>Last session</p>
+            </div>
+            <div className="home-last-sessions">
+              {lastSessions.map((last)=>(
+              <div className="home-last-session" key={last.id}>
+                <p>{last.name}</p>
+                <p>{last.score} / {last.total}</p>
+                <p>{last.accuracy} %</p>
+                <p>{new Date(last.completedAt).toLocaleDateString()}</p>
+              </div>
+              ))}
             </div>
           </div>
 

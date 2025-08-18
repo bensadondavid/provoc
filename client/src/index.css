@@ -461,7 +461,7 @@ nav ul li:hover{
 
 .previous-session-title{
     width: 95%;
-    margin: 0 auto;
+    margin: 0 auto 30px auto;
     padding: 10px 0;
     height: fit-content;
     display: flex;
@@ -478,6 +478,38 @@ nav ul li:hover{
 .previous-session-title svg{
     height: 30px;
     width: 30px;
+}
+
+.home-last-sessions{
+    height: fit-content;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    gap: 20px;
+}
+
+.home-last-session, .home-last-sessions-title{
+    height: fit-content;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    justify-content: space-between;
+    align-items: center;
+}
+
+.home-last-session p, .home-last-sessions-title p{
+    text-align: center;
+    text-transform: capitalize;
+    font-weight: 600;
+    font-size: medium;
+}
+
+.home-last-sessions-title p{
+    font-size: large;
+    margin-bottom: 30px;
 }
 
 
