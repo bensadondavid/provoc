@@ -231,10 +231,10 @@ function Home() {
               <StatsIcon />
             </div>
               <div className="global-stats">
-                <p>Completed words : {globalStats?.totalScore}</p>
-                <p>Total Words : {globalStats?.totalWordsPlayed}</p>
-                <p>Total Session : {globalStats?.totalSession}</p>
-                <p>Accuracy : {globalStats?.totalAccuracy} %</p>
+                <p>Completed words : <span>{globalStats?.totalScore}</span></p>
+                <p>Total Words : <span>{globalStats?.totalWordsPlayed}</span></p>
+                <p>Total Session : <span>{globalStats?.totalSession}</span></p>
+                <p>Accuracy : <span>{globalStats?.totalAccuracy} %</span></p>
               </div>
           </div>
 

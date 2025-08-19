@@ -15,7 +15,7 @@ function ForgotPassword() {
     const handleSubmit = async (e : React.FormEvent<HTMLFormElement>)=>{
         e.preventDefault()
         try{
-            const response = await fetch(`${urlBack}/forgot-password`,{
+            const response = await fetch(`${urlBack}/users/forgot-password`,{
                 method : 'POST',
                 headers : {'Content-type' : 'application/json'},
                 body : JSON.stringify({usernameOrEmail})
