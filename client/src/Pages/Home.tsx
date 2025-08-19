@@ -23,6 +23,13 @@ interface LastSession{
   completedAt : string
 }
 
+interface GlobalStats{
+  totalSession : string,
+  totalScore : string,
+  totalWordsPlayed : string,
+  totalAccuracy : string
+}
+
 function Home() {
 
   const navigate = useNavigate();
@@ -34,6 +41,7 @@ function Home() {
   const [gameFirstLanguage, setGameFirstLanguage] = useState('');
   const [gameSecondLanguage, setGameSecondLanguage] = useState('');
   const [lastSessions, setLastSessions] = useState<LastSession[]>([])
+  const [globalStats, setGlobalStats] = useState<GlobalStats>()
 
   const getLists = async () => {
     try {
@@ -105,6 +113,28 @@ function Home() {
   useEffect(()=>{
     getLastSession()
   },[])
+
+
+  const getGlobalStats = async()=>{
+    try{
+      const response = await fetch(`${urlBack}/stats/global-stats`, {
+        method : 'GET', 
+        headers : {'Authorization' : `Bearer ${token}`}
+      })
+      const data = await response.json()
+      if(!response.ok){
+        return console.log(data.message)
+      }
+      setGlobalStats(data.allStats)
+    }
+    catch(error){
+      console.log(error);
+    }
+  }
+
+  useEffect(()=>{
+    getGlobalStats()
+  }, [])
 
   return (
     <>
@@ -188,7 +218,7 @@ function Home() {
               <div className="home-last-session" key={last.id}>
                 <p>{last.name}</p>
                 <p>{last.score} / {last.total}</p>
-                <p>{last.accuracy} %</p>
+                <p>{last.accuracy.toFixed(2)} %</p>
                 <p>{new Date(last.completedAt).toLocaleDateString()}</p>
               </div>
               ))}
@@ -200,6 +230,12 @@ function Home() {
               <p>Your statistics</p>
               <StatsIcon />
             </div>
+              <div className="global-stats">
+                <p>Completed words : {globalStats?.totalScore}</p>
+                <p>Total Words : {globalStats?.totalWordsPlayed}</p>
+                <p>Total Session : {globalStats?.totalSession}</p>
+                <p>Accuracy : {globalStats?.totalAccuracy} %</p>
+              </div>
           </div>
 
         </div>

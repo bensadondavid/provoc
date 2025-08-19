@@ -324,7 +324,7 @@ nav ul li:hover{
 }
 
 .home-scnd-container{
-    grid-template-columns: 1.5fr 1fr;
+    grid-template-columns: 3fr 1fr;
 }
 
 .home-first-container .new-game, .home-stats, .previous-sessions{
@@ -459,6 +459,10 @@ nav ul li:hover{
 
 /* previous sessions */
 
+.previous-sessions, .home-stats{
+    overflow: scroll;
+}
+
 .previous-session-title{
     width: 95%;
     margin: 0 auto 30px auto;
@@ -541,7 +545,21 @@ nav ul li:hover{
     width: 30px;
 }
 
+.global-stats{
+    height: 80%;
+    width: 80%;
+    display: grid;
+    grid-template-rows: repeat(4, 1fr);
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;
+}
 
+.global-stats p{
+    text-transform: capitalize;
+    font-weight: 600;
+    font-size: medium;
+}
 
 /* Lists */
 
