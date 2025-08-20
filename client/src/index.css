@@ -457,6 +457,20 @@ nav ul li:hover{
     width: 18px;
 }
 
+.new-list-button-home{
+    height: 40px;
+    width: 150px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 20px;
+    background-color: #e409ef;
+    cursor: pointer;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 /* previous sessions */
 
 .previous-sessions, .home-stats{
@@ -577,6 +591,7 @@ nav ul li:hover{
     display: flex;
     flex-direction: column;
     justify-content: center;
+    position: relative;
 }
 
 .lists-title{
@@ -597,6 +612,57 @@ nav ul li:hover{
     border: none;
     border-radius: 50%;
     padding: 10px;
+}
+
+.pop-up-container{
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pop-up-list{
+    height: 30%;
+    width: 30%;
+    padding: 15px;
+    background-color: #2b2b2b;
+    border: none;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.pop-up-list p{
+    font-size: large;
+    font-weight: bold;
+}
+
+.pop-up-list-buttons{
+    height: fit-content;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.pop-up-button{
+    height: 40px;
+    width: 120px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 20px;
+    background-color: #e409ef;
+    cursor: pointer;
 }
 
 .lists-title svg{
@@ -650,7 +716,7 @@ nav ul li:hover{
     gap: 10px;
 }
 
-.lists-buttons button{
+.lists-buttons-button{
     height: 30px;
     width: 30px;
     border: none;
@@ -712,7 +778,7 @@ nav ul li:hover{
 }
 
 .new-list form button{
-     height: 40px;
+    height: 40px;
     width: 180px;
     margin-top: 10px;
     border: none;

@@ -69,6 +69,8 @@ function Lists() {
         }
     }
 
+    const [popup, setPopUp] = useState<boolean>(false)
+
   return (
     <>
         <Header />
@@ -92,9 +94,22 @@ function Lists() {
                       <p>{list.wordsNumber}</p>
                       <p>{new Date(list.createdAt).toLocaleDateString()}</p>
                   <div className="lists-buttons">
-                  <button onClick={()=>deleteList(list.id)}><EraseIcon /></button>
-                  <button onClick={()=>setList(`/list/${list.id}`)}><InfosIcon /></button>
-                  <button onClick={()=>{
+                  <button className="lists-buttons-button" onClick={()=>setPopUp(true)}><EraseIcon /></button>
+                  {popup &&
+                  <div className="pop-up-container">
+                    <div className="pop-up-list">
+                        <p>Are you sure you want to delete this list ? <br />
+                          This action is irreversible. 
+                        </p>
+                        <div className="pop-up-list-buttons">
+                          <button className="pop-up-button" onClick={()=>setPopUp(false)}>No, keep that list</button>
+                          <button className="pop-up-button" onClick={()=>deleteList(list.id)}>Yes</button>
+                        </div>
+                      </div>
+                    </div>
+                    }
+                  <button className="lists-buttons-button" onClick={()=>setList(`/list/${list.id}`)}><InfosIcon /></button>
+                  <button className="lists-buttons-button" onClick={()=>{
                     const params = new URLSearchParams({id : list.id, name : list.name})
                     setList(`/new-game?${params.toString()}`,)}}>
                     <PlayIcons />

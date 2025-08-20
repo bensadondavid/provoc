@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import Header from "../Components/Header"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import InfosIcon from "../assets/icons/InfosIcon"
 import PlayIcons from "../assets/icons/PlayIcons"
 import StatsIcon from "../assets/icons/StatsIcon"
@@ -183,7 +183,10 @@ function Home() {
               <p>Length</p>
               <p>Infos / Play</p>
             </div>
-            {lists.map((list)=>(
+            {lists.length === 0 ?
+              <Link to='/lists' className="new-list-button-home">Create a new list</Link>
+             :
+            (lists.map((list)=>(
               <div className="home-lists-list" key={list.id}>
                 <p>{list.name}</p>
                 <p>{list.firstLanguage} / {list.secondLanguage}</p>
@@ -196,7 +199,8 @@ function Home() {
                 <PlayIcons /></button>
               </div>
               </div>
-            ))}
+            )))
+              }
           </div>
         </div>
 
